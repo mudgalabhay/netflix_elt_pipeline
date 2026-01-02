@@ -1,0 +1,11 @@
+WITH STG_SCORES AS (
+    SELECT * FROM {{ ref('stg_genome_scores') }}
+)
+
+SELECT
+    MOVIE_ID,
+    TAG_ID,
+    ROUND(RELEVANCE, 4) AS RELEVANCE_SCORE
+FROM
+    STG_SCORES
+WHERE RELEVANCE > 0

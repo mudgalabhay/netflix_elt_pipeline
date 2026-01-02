@@ -1,0 +1,16 @@
+{{
+    config(
+        materialized='table'
+    )
+}}
+
+WITH RAW_RATINGS AS (
+    SELECT * FROM MOVIELENS.RAW.RAW_RATINGS
+)
+SELECT
+    USERID AS USER_ID,
+    MOVIEID AS MOVIE_ID,
+    RATING,
+    TO_TIMESTAMP_LTZ("timestamp") AS RATING_TIMESTAMP
+FROM
+    RAW_RATINGS
