@@ -77,4 +77,5 @@ This project implements an **end-to-end ELT data pipeline** for Netflix datasets
 
 ✅ This project demonstrates **modern data engineering best practices** using ELT, dbt modeling, testing, and snapshots.
 
+In progress......
 ---
