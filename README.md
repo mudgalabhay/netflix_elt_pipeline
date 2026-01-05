@@ -1,69 +1,90 @@
 # 📺 NETFLIX ELT DATA PIPELINE
 
-## 📌 Overview
+## 📌 Project Overview
 
-This project implements an **end-to-end ELT data pipeline** for Netflix datasets using **AWS S3, Snowflake, and dbt**. The pipeline ingests raw data, applies transformations using dbt, and builds analytics-ready **fact and dimension tables**, including **SCD Type 2 snapshots**.
+This project implements a **modern ELT data pipeline** for Netflix datasets using **AWS S3, Snowflake, and dbt**. The pipeline ingests raw data, transforms it using dbt, and builds analytics-ready **fact and dimension tables**, including **incremental models and SCD Type-2 snapshots**.
 
 ---
 
 ## 🏗️ Architecture
 
-**Source → Data Lake → Warehouse → Transform → Analytics**
-
-* **AWS S3 (LocalStack)** – Raw data landing (Data Lake)
-* **Snowflake** – Data Warehouse
-* **dbt** – Transformations, testing, snapshots, and modeling
+**Source → S3 (Data Lake) → Snowflake (Warehouse) → dbt (Transform) → Analytics**
 
 ---
 
 ## 🛠️ Tech Stack
 
-* AWS S3 (via LocalStack)
-* Snowflake
-* dbt (dbt-core, dbt-snowflake)
-* Python
-* SnowSQL
+* **AWS S3 (LocalStack)** – Raw data landing (Data Lake)
+* **Snowflake** – Data Warehouse
+* **dbt (dbt-core, dbt-snowflake)** – Transformations & modeling
+* **Python, SnowSQL**
 
 ---
 
 ## 📂 Data Layers
 
 * **Raw Landing Layer** – Original ingested data
-* **Staging Layer** – Copy of raw data for safety
-* **Dev Layer** – Transformed data using dbt (facts & dimensions)
+* **Staging Layer** – Copy of raw data for safety & reprocessing
+* **Dev Layer** – Transformed data (facts & dimensions via dbt)
 
 ---
 
-## 🔁 dbt Features Used
+## 🔁 dbt Concepts Used
 
 * Models (staging, fact, dimension)
-* Materializations (view, table, incremental, ephemeral)
+* Materializations: `view`, `table`, `incremental`, `ephemeral`
 * Seeds (static reference data)
-* Sources (raw data definitions)
-* Snapshots (SCD Type 2)
+* Sources (raw table definitions)
+* Snapshots (SCD Type-2)
 * Tests (generic & singular)
+* Macros (reusable SQL logic)
 * dbt_utils package
 
 ---
 
-## ⚙️ Pipeline Flow
+## ⚙️ Pipeline Workflow
 
-1. Upload CSV data to **AWS S3 (LocalStack)**
+1. Store raw CSV data in **AWS S3 (LocalStack)**
 2. Load data into **Snowflake RAW tables**
-3. Transform data using **dbt staging models**
+3. Create **staging models** using dbt
 4. Build **fact & dimension tables**
-5. Implement **incremental models**
-6. Track history using **dbt snapshots (SCD2)**
+5. Implement **incremental fact tables**
+6. Track history using **SCD Type-2 snapshots**
 7. Apply **data quality tests**
+8. Generate **dbt documentation**
 
 ---
 
-## 📊 Key Outcomes
+## 🧪 Testing & Quality
 
-* Analytics-ready star schema
-* Incremental fact tables
-* Historical tracking using SCD Type 2
-* Modular, scalable ELT design
+* **Generic Tests**: `unique`, `not_null`, `relationships`, `accepted_values`
+* **Singular Tests**: Custom SQL-based validations
+* Execute tests using:
+
+```bash
+dbt test
+```
+
+---
+
+## 📸 Snapshots (SCD Type-2)
+
+* Implemented using dbt snapshots
+* Tracks historical changes with `dbt_valid_from` & `dbt_valid_to`
+* Stored in a dedicated **SNAPSHOT schema**
+
+---
+
+## 📄 Documentation & Analysis
+
+* Generate docs:
+
+```bash
+dbt docs generate
+dbt docs serve
+```
+
+* Ad-hoc analysis supported via `/analyses` folder
 
 ---
 
@@ -75,7 +96,6 @@ This project implements an **end-to-end ELT data pipeline** for Netflix datasets
 
 ---
 
-✅ This project demonstrates **modern data engineering best practices** using ELT, dbt modeling, testing, and snapshots.
+✅ This project demonstrates **end-to-end ELT, dbt best practices, incremental processing, SCD-2 handling, testing, and documentation**.
 
-In progress......
 ---
